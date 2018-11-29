@@ -12,7 +12,10 @@ export class InMemoryService implements InMemoryDbService {
   }
 
   createDb(req: RequestInfo): {} | Observable<{}> | Promise<{}> {
-    const todos: Todo[] = [];
+    const todos: Todo[] = [
+      {id: 0, task: 'メールチェック', finish: false}
+    ];
     return {todos};
   }
+
 }

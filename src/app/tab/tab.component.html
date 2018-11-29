@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar>
+  <a routerLink="/" [queryParams]="{filter: 'open'}" mat-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Open</a>
+  <a routerLink="/" [queryParams]="{filter: 'close'}" mat-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Close</a>
+  <a routerLink="/" mat-tab-link routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">All</a>
+</nav>

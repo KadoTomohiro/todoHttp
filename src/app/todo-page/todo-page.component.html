@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-header>
+    <tdh-form></tdh-form>
+  </mat-card-header>
+  <mat-card-actions>
+    <tdh-tab></tdh-tab>
+  </mat-card-actions>
+  <mat-card-content>
+    <tdh-list [filter]="filter$ | async"></tdh-list>
+  </mat-card-content>
+</mat-card>

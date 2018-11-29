@@ -1,0 +1,5 @@
+<mat-checkbox [(ngModel)]="todo.finish" (change)="onChecked()"></mat-checkbox>
+<span>{{todo.task}}</span>
+<button mat-mini-fab color="warn" (click)="onDelete()">
+  <mat-icon>delete</mat-icon>
+</button>
