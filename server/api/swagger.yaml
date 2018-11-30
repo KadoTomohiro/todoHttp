@@ -1,0 +1,110 @@
+---
+swagger: "2.0"
+info:
+  description: "TodoリストAPI"
+  version: "0.0.1"
+  title: "TodoApi"
+basePath: "/api"
+paths:
+  /todos:
+    get:
+      description: "Todoの全件取得"
+      operationId: "todosGET"
+      parameters:
+      - name: "filter"
+        in: "query"
+        description: "todo filter by finished"
+        required: false
+        type: "string"
+        enum:
+        - "open"
+        - "close"
+        - "all"
+      responses:
+        200:
+          description: "取得成功"
+          schema:
+            type: "array"
+            example:
+            - id: 0
+              task: "メールチェック"
+              finish: true
+            - id: 1
+              task: "ミーティング"
+              finish: false
+            items:
+              $ref: "#/definitions/Todo"
+      x-swagger-router-controller: "Default"
+    post:
+      description: "新規Todoの登録"
+      operationId: "todosPOST"
+      parameters:
+      - in: "body"
+        name: "todo"
+        required: false
+        schema:
+          $ref: "#/definitions/Todo"
+      responses:
+        201:
+          description: "登録成功"
+      x-swagger-router-controller: "Default"
+  /todos/{id}:
+    get:
+      description: "Todo1件の取得"
+      operationId: "todosIdGET"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "取得成功"
+          schema:
+            $ref: "#/definitions/Todo"
+        404:
+          description: "リソースが存在しない"
+      x-swagger-router-controller: "Default"
+    put:
+      description: "Todo1件の更新"
+      operationId: "todosIdPUT"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "number"
+      - in: "body"
+        name: "todo"
+        required: false
+        schema:
+          $ref: "#/definitions/Todo"
+      responses:
+        200:
+          description: "更新成功"
+      x-swagger-router-controller: "Default"
+    delete:
+      description: "Todo1件の削除"
+      operationId: "todosIdDELETE"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "number"
+      responses:
+        200:
+          description: "削除成功"
+      x-swagger-router-controller: "Default"
+definitions:
+  Todo:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      task:
+        type: "string"
+      finish:
+        type: "boolean"
+    example:
+      id: 0
+      task: "メールチェック"
+      finish: true

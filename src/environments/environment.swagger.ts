@@ -6,7 +6,7 @@ import {Environment, ServerFakeTypeName} from './environment.interface';
 
 export const environment: Environment = {
   production: false,
-  serverFake: ServerFakeTypeName.inMemory
+  serverFake: ServerFakeTypeName.swagger
 };
 
 /*

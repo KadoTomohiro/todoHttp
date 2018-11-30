@@ -52,6 +52,14 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "swagger": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.swagger.ts"
+                }
+              ]
             }
           }
         },
@@ -63,6 +71,9 @@
           "configurations": {
             "production": {
               "browserTarget": "todoHttp:build:production"
+            },
+            "swagger": {
+              "browserTarget": "todoHttp:build:swagger"
             }
           }
         },

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {HttpClientInMemoryWebApiModule, HttpInMemoryWebApiModule, InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import { InMemoryService } from './api/in-memory.service';
 import { FormComponent } from './form/form.component';
 import { ListComponent } from './list/list.component';
@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { TodoPageComponent } from './todo-page/todo-page.component';
 import {ApiInterceptorService} from './core/api-interceptor.service';
+import {environment} from '../environments/environment';
+import {ServerFakeTypeName} from '../environments/environment.interface';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {ApiInterceptorService} from './core/api-interceptor.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryService),
+    (environment.production || environment.serverFake !== ServerFakeTypeName.inMemory) ?
+      [] : HttpClientInMemoryWebApiModule.forRoot(InMemoryService),
     ReactiveFormsModule,
     FormsModule,
     MatToolbarModule,
@@ -56,7 +59,7 @@ import {ApiInterceptorService} from './core/api-interceptor.service';
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptorService,
       multi: true
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
