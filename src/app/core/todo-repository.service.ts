@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Todo } from './shared/model/todo';
-import { switchMap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {Todo} from '../shared/model/todo';
+import {switchMap, tap} from 'rxjs/operators';
+import {TodoApiService} from './todo-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,10 @@ export class TodoRepositoryService {
   private todo$: Subject<Todo[]>;
   private _todo: Observable<Todo[]>;
 
-  private _url = '/api/todos';
-  constructor(private http: HttpClient) { }
+  constructor(private api: TodoApiService) { }
 
-  fetch() {
-    return this.http.get<Todo[]>(this._url)
+  fetch(): Observable<Todo[]> {
+    return this.api.getAll()
       .pipe(
         switchMap(todos => {
           if (this.todo$) {
@@ -31,39 +30,32 @@ export class TodoRepositoryService {
   }
 
   getAll(): Observable<Todo[]> {
-    return this._todo || this.fetch();
+    return this.fetch();
   }
 
   // getById(id: string): Observable<Todo> {
   //   return this.http.get<Todo>(this.getUrlWithId(id));
   // }
 
-  post(todo: Todo): Observable<any> {
-    return this.http.post(this._url, todo)
+  add(todo: Todo): Observable<any> {
+    console.log(todo);
+    return this.api.post(todo)
       .pipe(
         switchMap(() => this.fetch())
       );
   }
 
-  put(todo: Todo): Observable<any> {
-    return this.http.put(this.getUrlWithId(todo.id), todo)
+  update(todo: Todo): Observable<any> {
+    return this.api.put(todo)
       .pipe(
         switchMap(() => this.fetch())
       );
   }
 
   delete(todo: Todo): Observable<any> {
-    return this.http.delete(this.getUrlWithId(todo.id))
+    return this.api.delete(todo)
       .pipe(
         switchMap(() => this.fetch())
       );
-  }
-
-  private getUrlWithId(id: number) {
-    return `${this._url}/${id}`;
-  }
-
-  getFilterValue(filter: string): boolean {
-    return filter !== 'open';
   }
 }

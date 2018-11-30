@@ -10,7 +10,7 @@ import { ListComponent } from './list/list.component';
 import { TodoComponent } from './todo/todo.component';
 import { TabComponent } from './tab/tab.component';
 import { HeaderComponent } from './header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {
   MatButtonModule,
   MatCardModule,
@@ -22,6 +22,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { TodoPageComponent } from './todo-page/todo-page.component';
+import {ApiInterceptorService} from './core/api-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,13 @@ import { TodoPageComponent } from './todo-page/todo-page.component';
     MatIconModule,
     MatTabsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

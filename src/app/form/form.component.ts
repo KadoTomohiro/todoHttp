@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { TodoRepositoryService } from '../todo-repository.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TodoRepositoryService} from '../core/todo-repository.service';
 
 @Component({
   selector: 'tdh-form',
@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.repo.post({
+    this.repo.add({
       finish: false,
       task: this.form.value['task']
     })

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Todo } from '../shared/model/todo';
-import { TodoRepositoryService } from '../todo-repository.service';
+import { TodoRepositoryService } from '../core/todo-repository.service';
 
 @Component({
   selector: 'tdh-todo',
@@ -16,7 +16,7 @@ export class TodoComponent implements OnInit {
   }
 
   onChecked() {
-    this.repo.put(this.todo).subscribe();
+    this.repo.update(this.todo).subscribe();
   }
 
   onDelete() {

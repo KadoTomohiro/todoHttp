@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {FilterType} from '../shared/model/filter-type';
 
 @Component({
   selector: 'tdh-todo-page',
@@ -10,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class TodoPageComponent implements OnInit {
 
-  filter$: Observable<string>;
+  filter$: Observable<FilterType>;
   constructor(private route: ActivatedRoute) {
     this.filter$ = this.route.queryParams
       .pipe(

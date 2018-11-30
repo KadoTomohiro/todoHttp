@@ -1,6 +1,5 @@
 <nav mat-tab-nav-bar>
-  <a routerLink="/" [queryParams]="{filter: 'open'}" mat-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Open</a>
-  <a routerLink="/" [queryParams]="{filter: 'close'}" mat-tab-link routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Close</a>
-  <a routerLink="/" mat-tab-link routerLinkActive #rla="routerLinkActive"
-     [active]="rla.isActive">All</a>
+  <ng-container *ngFor="let filter of filters">
+    <a routerLink="/" mat-tab-link  [queryParams]="{filter: filter.filter}" [active]="isActive(filter.filter)">{{filter.label}}</a>
+  </ng-container>
 </nav>

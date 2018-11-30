@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { TodoRepositoryService } from '../todo-repository.service';
+import { TodoRepositoryService } from '../core/todo-repository.service';
 import { Observable } from 'rxjs';
 import { Todo } from '../shared/model/todo';
+import {FilterType, FilterTypeName} from '../shared/model/filter-type';
 
 @Component({
   selector: 'tdh-list',
@@ -10,7 +11,7 @@ import { Todo } from '../shared/model/todo';
 })
 export class ListComponent implements OnInit {
 
-  @Input() filter: 'open' | 'close' | undefined;
+  @Input() filter: FilterType;
   todos$: Observable<Todo[]>;
 
   constructor(private repo: TodoRepositoryService) {
@@ -21,11 +22,9 @@ export class ListComponent implements OnInit {
   }
 
   filtering(finish: boolean) {
-    if (!this.filter) {
-      return true;
-    }
-
-    return (this.filter === 'open' && !finish) || (this.filter === 'close' && finish);
+    return this.filter === FilterTypeName.ALL ||
+      (this.filter === FilterTypeName.OPEN && !finish) ||
+      (this.filter === FilterTypeName.CLOSE && finish);
   }
 
 }
